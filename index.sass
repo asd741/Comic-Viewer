@@ -1,39 +1,42 @@
+$maxDesign : 1024
 body,h2
     margin: 0
 .dib
     display: inline-block
 main
-    margin-top: 24px
+    margin-top: 24rem / $maxDesign
 .container
-    width: 1024px
+    width: 1024rem / $maxDesign
     margin: auto
-    font-size: 0px
+    font-size: 0rem / $maxDesign
     & .content
-        width: 620px
+        width: 620rem / $maxDesign
         margin: auto
         & .banner
-            width: 300px
-            border: 2px solid
+            width: 300rem / $maxDesign
+            border: 2rem / $maxDesign solid
         & .textPart
             vertical-align: top
-            width: 316px
+            width: 316rem / $maxDesign
             height: 100%
             background: red
-            font-size: 24px
+            font-size: 24rem / $maxDesign
             & .title
                 color: #fff
                 background: #000
-                height: 52px
-                line-height: 52px
+                height: 52rem / $maxDesign
+                line-height: 52rem / $maxDesign
                 text-align: center
-                font-size: 34px
+                font-size: 34rem / $maxDesign
                 box-sizing: border-box
+            & .content
+                padding: 24rem / $maxDesign 0 0 24rem / $maxDesign
     & .top
         background-color: #000
-        height: 72px
-        line-height: 72px
+        height: 72rem / $maxDesign
+        line-height: 72rem / $maxDesign
         text-align: center
         & h2
             font-family: Roboto-BlackItalic
-            font-size: 36px
+            font-size: 36rem / $maxDesign
             color: #50FF44
