@@ -1,42 +1,119 @@
 $maxDesign : 1024
-body,h2
+body,h2,h4,p
     margin: 0
-.dib
-    display: inline-block
+.clearfix
+    clear: both
 main
-    margin-top: 24rem / $maxDesign
+    margin-top: 24px
+@media screen and (max-width: 1024px)
+    body .container
+        width: 100%
+        & .content
+            width: 100%
+            & .banner,& .banner-info
+                display: block
+                margin: auto
+            & .banner
+                margin-bottom: 16px
+            & .banner-info .content
+                padding-left: 0
+        .banner-info,.page-footer
+            width: 70vw
 .container
-    width: 1024rem / $maxDesign
+    width: 1024px
     margin: auto
-    font-size: 0rem / $maxDesign
-    & .content
-        width: 620rem / $maxDesign
-        margin: auto
-        & .banner
-            width: 300rem / $maxDesign
-            border: 2rem / $maxDesign solid
-        & .textPart
-            vertical-align: top
-            width: 316rem / $maxDesign
-            height: 100%
-            background: red
-            font-size: 24rem / $maxDesign
-            & .title
-                color: #fff
-                background: #000
-                height: 52rem / $maxDesign
-                line-height: 52rem / $maxDesign
-                text-align: center
-                font-size: 34rem / $maxDesign
-                box-sizing: border-box
-            & .content
-                padding: 24rem / $maxDesign 0 0 24rem / $maxDesign
-    & .top
+    font-size: 0px
+    & .page-header
         background-color: #000
-        height: 72rem / $maxDesign
-        line-height: 72rem / $maxDesign
+        height: 72px
+        line-height: 72px
         text-align: center
         & h2
             font-family: Roboto-BlackItalic
-            font-size: 36rem / $maxDesign
+            font-size: 36px
             color: #50FF44
+    & .content
+        width: 620px
+        margin: auto
+        & .banner
+            width: 300px
+            border: 2px solid
+        & .banner-info
+            display: inline-block
+            vertical-align: top
+            width: 316px
+            height: 100%
+            & .title
+                box-sizing: border-box
+                background: #000
+                height: 52px
+                line-height: 52px
+                text-align: center
+                color: #fff
+                font-size: 34px
+            & .content
+                width: 100%
+                padding: 16px 24px
+                & .class
+                    margin-right: 20px
+                    margin-bottom: 8px
+                    width: 52px
+                    float: left
+                    font-family: Roboto-Bold
+                & .tag
+                    font-family: Roboto-Regular
+                & .class,& .tag,& .starbox
+                    font-size: 16px
+                    color: #000
+                    line-height: 24px
+                & .starbox
+                    float: left
+                    & .fa-star
+                        font-size: 14px
+                        margin-right: 3px
+                & .title-essay,& .first-essay,& .second-essay
+                    font-family: Roboto-Regular
+                    font-size: 16px
+                    color: #000000
+                    line-height: 24px
+                & .title-essay
+                    font-family: Roboto-Bold
+                    margin-top: 24px
+                    margin-bottom: 8px
+                & .first-essay
+                    margin-bottom: 24px
+    & .page-footer
+        margin: 28px auto 50px
+        & .label
+            display: inline-block
+            padding: 8px 24px
+            background-color: #000
+            font-family: Roboto-Bold
+            font-size: 24px
+            color: #fff
+        & .chapter-box
+            border: 4px solid #000
+            padding: 11px 0px
+            background-color: #fff
+            font-family: Roboto-Bold
+            font-size: 16px
+            font-weight: bold
+            color: #000
+            line-height: 24px
+            & .chapter-list
+                padding: 10px 24px
+                &:hover
+                    background-color: #000
+                    color: #fff
+                    cursor: pointer
+            & .new::after
+                margin-left: 16px
+                padding: 2px 12px
+                background-color: #50FF44
+                content: 'NEW'
+                font-family: Roboto-Bold
+                font-weight: bolder
+                font-size: 14px
+                line-height: 14px
+                color: #000
+    
