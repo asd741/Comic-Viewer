@@ -1,5 +1,5 @@
 $maxDesign : 1024
-body,h2,h4,p
+body,h1,h2,h3,h4,p,input
     margin: 0
 .clearfix
     clear: both
@@ -23,6 +23,92 @@ main
     width: 1024px
     margin: auto
     font-size: 0px
+    & .chapter-nav,& .chapter-content
+        display: flex
+        font-size: 16px
+    & .chapter-nav
+        justify-content: space-between
+        align-items: center
+        margin: auto
+        width: 620px
+        height: 72px
+        font-weight: bold
+        font-family: Roboto-Bold
+        & .options
+            display: flex
+            justify-content: flex-start
+            align-items: center
+            & .title
+                position: relative
+                padding-right: 20px
+                font-size: 20px
+                &::after
+                    position: absolute
+                    right: 0
+                    top: 50%
+                    margin-right: 2px
+                    border-style: solid
+                    border-color: transparent transparent transparent black
+                    border-width: 4px 5px
+                    content: ''
+                    transform: translateY(-50%)
+                &:hover
+                    cursor: pointer
+            & .chapter,& .page
+                position: relative
+                box-sizing: border-box
+                border: 2px solid #000
+                padding: 8px 0px 8px 16px
+                background: #fff
+                width: 127px
+                height: 35px
+                font-size: 16px
+                font-weight: bold
+                &:hover
+                    cursor: pointer
+                &::before
+                    position: absolute
+                    bottom: 0
+                    right: 0
+                    margin-right: 16px
+                    margin-bottom: 3px
+                    border-style: solid
+                    border-color: black transparent transparent transparent
+                    border-width: 5px 4px
+                    content: ''
+                &::after
+                    position: absolute
+                    top: 0
+                    right: 0
+                    margin-right: 16px
+                    margin-top: 3px
+                    border-style: solid
+                    border-color: transparent transparent black transparent
+                    border-width: 5px 4px
+                    content: ''
+            & .page
+                border-left: 0px
+        & .icons
+            height: 24px
+            & .switch
+                width: 48px
+                height: 24px
+                visibility: hidden
+                vertical-align: middle
+                &::after
+                    display: block
+                    box-sizing: border-box
+                    border: 2px solid
+                    width: 48px
+                    height: 24px
+                    content: ''
+                    visibility: visible
+                    background-image: repeating-linear-gradient(to right,black 0%,black,50%, white 50%,white 100%)
+                &:hover
+                    cursor: pointer
+            & .fas
+                font-size: 20px
+                vertical-align: middle
     & .page-header
         background-color: #000
         height: 72px

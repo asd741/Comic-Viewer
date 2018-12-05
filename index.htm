@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +7,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
         crossorigin="anonymous">
     <title>Document</title>
+    <script src="bind.js"></script>
 </head>
 
 <body>
@@ -15,9 +15,21 @@
         <header class="page-header">
             <h2>Comicomic</h2>
         </header>
+        <nav class="chapter-nav">
+            <section class="options">
+                <h3 class="title">My Hexschool</h3>
+                <div class="chapter">Chapter 1</div>
+                <div class="page">Page 1</div>
+            </section>
+            <div class="icons">
+                <i class="fas fa-sun"></i>
+                <input type="checkbox" class="switch">
+                <i class="fas fa-moon"></i>
+            </div>
+        </nav>
         <main>
-            <section class="container">
-                <section class="content">
+            <section class="content">
+                <div class="index-content">
                     <img class="banner" src="img/cover.png" alt="">
                     <section class="banner-info">
                         <h2 class="title">MY HEXSCHOOL</h2>
@@ -46,15 +58,20 @@
                             </div>
                             <div class="clearfix">
                                 <h4 class="title-essay">Summary</h4>
-                                <p class="first-essay">If your banker breaks, you snap; if your apothecary by mistake sends you poison in your pills, you die. </p>
-                                <p class="second-essay">Therefore, I say, I saw that this situation of mine was the precise situation of every mortal that has this Siamese connexion with a plurality of other mortals. </p>
+                                <p class="first-essay">If your banker breaks, you snap; if your apothecary by mistake sends
+                                    you poison in your pills, you die. </p>
+                                <p class="second-essay">Therefore, I say, I saw that this situation of mine was the precise
+                                    situation of every mortal that has this Siamese connexion with a plurality of other
+                                    mortals. </p>
                             </div>
                         </div>
                     </section>
-                </section>
+                </div>
+                <div class="chapter-content">
+                </div>
             </section>
         </main>
-        <footer class="page-footer">
+        <footer class="page-footer index-footer">
             <div class="content">
                 <h2 class="label">All Chapters</h2>
                 <section class="chapter-box">
@@ -64,7 +81,6 @@
             </div>
         </footer>
     </section>
-    <script src="bind.js"></script>
 </body>
 
 </html>
