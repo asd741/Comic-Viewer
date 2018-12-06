@@ -3,6 +3,10 @@ window.onload=function(){
     aChapterList=document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterNavBtn=document.querySelector(".chapter-nav .chapter");
     oPageNavBtn=document.querySelector(".chapter-nav .page");
+    aGoIndexBtn=document.getElementsByClassName('go-index-btn');
+    for(let i=-1;aGoIndexBtn[++i];){
+        aGoIndexBtn[i].addEventListener('click',goIndexPage);
+    }
     for(let i=-1;aChapterList[++i];){
         aChapterList[i].addEventListener('click',goChapterPage.bind("",i+1));
     }
@@ -25,5 +29,11 @@ window.onload=function(){
         document.getElementsByClassName('index-content')[0].style.display="none";
         document.getElementsByClassName('chapter-content')[0].style.display="block";
         document.getElementsByClassName('chapter-nav')[0].style.display="flex";
+    }
+    function goIndexPage(){
+        document.getElementsByClassName('index-footer')[0].style.display="block";
+        document.getElementsByClassName('index-content')[0].style.display="block";
+        document.getElementsByClassName('chapter-content')[0].style.display="none";
+        document.getElementsByClassName('chapter-nav')[0].style.display="none";
     }
 }
