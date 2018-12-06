@@ -1,8 +1,21 @@
 $maxDesign : 1024
-body,h1,h2,h3,h4,p,input
+@mixin nav-menu-btn
+    box-sizing: border-box
+    border: 2px solid #000
+    padding: 8px 0px 8px 16px
+    width: 127px
+    height: 35px
+    font-size: 16px
+    font-weight: bold
+body,h1,h2,h3,h4,p,input,ul
     margin: 0
+ul
+    padding: 0
+    list-style: none
 .clearfix
     clear: both
+.none
+    display: none
 main
     margin-top: 24px
 @media screen and (max-width: 1024px)
@@ -56,14 +69,8 @@ main
                     cursor: pointer
             & .chapter,& .page
                 position: relative
-                box-sizing: border-box
-                border: 2px solid #000
-                padding: 8px 0px 8px 16px
+                +nav-menu-btn
                 background: #fff
-                width: 127px
-                height: 35px
-                font-size: 16px
-                font-weight: bold
                 &:hover
                     cursor: pointer
                 &::before
@@ -86,6 +93,21 @@ main
                     border-color: transparent transparent black transparent
                     border-width: 5px 4px
                     content: ''
+                & .menu
+                    position: absolute
+                    bottom: -9px
+                    left: -2px
+                    background: #fff
+                    transform: translateY(100%)
+                    &>li
+                        +nav-menu-btn
+                        color: black
+                        &:hover
+                            background-color: black
+                            color: #fff
+                            // color: #50FF44
+                    &>li:not(:last-child)
+                        border-bottom: 0px
             & .page
                 border-left: 0px
         & .icons
