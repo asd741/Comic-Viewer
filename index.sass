@@ -37,7 +37,7 @@ ul
     margin: auto
     font-size: 0px
     & .chapter-nav,& .chapter-content
-        display: flex
+        display: none
         font-size: 16px
     & .chapter-nav
         justify-content: space-between
@@ -173,6 +173,7 @@ ul
         width: 620px
         margin: auto
         & .index-content
+            display: none
             margin-top: 28px
         & .banner
             width: 300px
@@ -292,6 +293,8 @@ ul
                         display: block
                         width: 80px
                         height: 120px
+                        &:hover
+                            cursor: pointer
             & .bottom-scrollbar
                 position: relative
                 margin-top: 16px
@@ -333,3 +336,5 @@ ul
                         width: 90px
                         height: 20px
                         background: black
+                        &:hover
+                            cursor: pointer
