@@ -24,16 +24,20 @@ window.onload=function(){
         oChapterNavBtn.getElementsByClassName('menu')[0].classList.add('none');
         oPageNavBtn.getElementsByClassName('menu')[0].classList.add('none');
     })
-    function goChapterPage(chapter){
+    function goChapterPage(i){
+        window.history.pushState('','',"chapter"+i);
         document.getElementsByClassName('index-footer')[0].style.display="none";
         document.getElementsByClassName('index-content')[0].style.display="none";
         document.getElementsByClassName('chapter-content')[0].style.display="block";
         document.getElementsByClassName('chapter-nav')[0].style.display="flex";
+        document.getElementsByClassName('chapter-footer')[0].style.display="block";
     }
     function goIndexPage(){
+        window.history.pushState('',"",'index.htm');
         document.getElementsByClassName('index-footer')[0].style.display="block";
         document.getElementsByClassName('index-content')[0].style.display="block";
         document.getElementsByClassName('chapter-content')[0].style.display="none";
         document.getElementsByClassName('chapter-nav')[0].style.display="none";
+        document.getElementsByClassName('chapter-footer')[0].style.display="none";
     }
 }
