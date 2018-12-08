@@ -9,6 +9,12 @@ $maxDesign : 1024
     font-weight: bold
 html
     background-color: #f2f2f2
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
 body,h1,h2,h3,h4,p,input,ul
     margin: 0
 ul
@@ -73,17 +79,7 @@ ul
                 background: #fff
                 &:hover
                     cursor: pointer
-                &::before
-                    position: absolute
-                    bottom: 0
-                    right: 0
-                    margin-right: 16px
-                    margin-bottom: 3px
-                    border-style: solid
-                    border-color: black transparent transparent transparent
-                    border-width: 5px 4px
-                    content: ''
-                &::after
+                & .before
                     position: absolute
                     top: 0
                     right: 0
@@ -93,6 +89,20 @@ ul
                     border-color: transparent transparent black transparent
                     border-width: 5px 4px
                     content: ''
+                    &:hover
+                        border-color: #50ff44 transparent transparent transparent
+                & .after
+                    position: absolute
+                    bottom: 0
+                    right: 0
+                    margin-right: 16px
+                    margin-bottom: 3px
+                    border-style: solid
+                    border-color: black transparent transparent transparent
+                    border-width: 5px 4px
+                    content: ''
+                    &:hover
+                        border-color: transparent transparent #50ff44 transparent
                 & .chapter-btn,& .page-btn
                     +nav-menu-btn
                 & .menu
@@ -169,6 +179,8 @@ ul
             font-family: Roboto-BlackItalic
             font-size: 36px
             color: #50FF44
+            &:hover
+                cursor: pointer
     & .content
         width: 620px
         margin: auto
