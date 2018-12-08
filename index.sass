@@ -70,7 +70,6 @@ ul
             & .chapter,& .page
                 position: relative
                 z-index: 2
-                +nav-menu-btn
                 background: #fff
                 &:hover
                     cursor: pointer
@@ -94,10 +93,11 @@ ul
                     border-color: transparent transparent black transparent
                     border-width: 5px 4px
                     content: ''
+                & .chapter-btn,& .page-btn
+                    +nav-menu-btn
                 & .menu
                     position: absolute
                     bottom: -9px
-                    left: -2px
                     background: #fff
                     transform: translateY(100%)
                     &>li

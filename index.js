@@ -2,7 +2,9 @@ const indexSass=require('./index.sass');
 window.onload=function(){
     const state={
         Chapter:1,
-        ChapterPage:1
+        ChapterPage:1,
+        totalChapter:2,
+        totalPage:12
     };
     if(window.location.hash===''){
         goHomePage();
@@ -12,41 +14,51 @@ window.onload=function(){
     // window.location.href.indexOf('#')
     // goHomePage();
     aIndexChapterList=document.querySelectorAll(".page-footer .chapter-box .chapter-list");
-    oChapterBtn=document.querySelector(".chapter-nav .chapter");
-    oPageBtn=document.querySelector(".chapter-nav .page");
-    agoHomePageBtn=document.getElementsByClassName('go-index-btn');
-    aChapterMenuList=document.querySelectorAll('.options .chapter .menu li');
-    aPageMenuList=document.querySelectorAll('.options .page .menu li');
+    oChapterBtn=document.querySelector(".options .chapter .chapter-btn");
+    oPageBtn=document.querySelector(".options .page .page-btn");
+    goHomePageBtn=document.getElementsByClassName('go-index-btn');
+    oChapterMenuList=document.querySelector('.options .chapter .menu');
+    oPageMenuList=document.querySelector('.options .page .menu');
+    aChapterMenuListLi=document.querySelectorAll('.options .chapter .menu li');
+    aPageMenuListLi=document.querySelectorAll('.options .page .menu li');
     oComicImg=document.getElementById('comic-img');
     oComicPrevBtn=document.querySelector(".chapter-content .prev");
     oComicNextBtn=document.querySelector(".chapter-content .next");
-    oComicPrevBtn.addEventListener('click',changeComicPage.bind('',--state.ChapterPage));
-    oComicNextBtn.addEventListener('click',changeComicPage.bind('',++state.ChapterPage));
-    for(let i=-1;agoHomePageBtn[++i];){
-        agoHomePageBtn[i].addEventListener('click',goHomePage);
+    oComicPrevBtn.addEventListener('click',()=>{
+        if(state.ChapterPage-1>0){
+            changeComicPage(--state.ChapterPage);
+        }
+    });
+    oComicNextBtn.addEventListener('click',()=>{
+        if(state.ChapterPage+1<=state.totalPage){
+            changeComicPage(++state.ChapterPage);
+        }
+    });
+    for(let i=-1;goHomePageBtn[++i];){
+        goHomePageBtn[i].addEventListener('click',goHomePage);
     }
     for(let i=-1;aIndexChapterList[++i];){
         aIndexChapterList[i].addEventListener('click',goChapter.bind("",i+1));
     }
-    for(let i=-1;aChapterMenuList[++i];){
-        aChapterMenuList[i].addEventListener('click',changeComicChapter.bind("",i+1));
+    for(let i=-1;aChapterMenuListLi[++i];){
+        aChapterMenuListLi[i].addEventListener('click',changeComicChapter.bind("",i+1));
     }
-    for(let i=-1;aPageMenuList[++i];){
-        aPageMenuList[i].addEventListener('click',changeComicPage.bind("",i+1));
+    for(let i=-1;aPageMenuListLi[++i];){
+        aPageMenuListLi[i].addEventListener('click',changeComicPage.bind("",i+1));
     }
     oChapterBtn.addEventListener('click',function(){
-        this.getElementsByClassName('menu')[0].classList.toggle('none');
-        oPageBtn.getElementsByClassName('menu')[0].classList.add('none');
+        oChapterMenuList.classList.toggle('none');
+        oPageMenuList.classList.add('none');
         window.event?event.stopPropagation():cancelBubble=true;
     });
     oPageBtn.addEventListener('click',function(){
-        this.getElementsByClassName('menu')[0].classList.toggle('none');
-        oChapterBtn.getElementsByClassName('menu')[0].classList.add('none');
+        oPageMenuList.classList.toggle('none');
+        oChapterMenuList.classList.add('none');
         window.event?event.stopPropagation():cancelBubble=true;
     });
     document.documentElement.addEventListener('click',function(){
-        oChapterBtn.getElementsByClassName('menu')[0].classList.add('none');
-        oPageBtn.getElementsByClassName('menu')[0].classList.add('none');
+        oChapterMenuList.classList.add('none');
+        oPageMenuList.classList.add('none');
     })
     function goChapter(i){
         window.history.pushState(state,'chapter'+i,"#chapter"+i);
@@ -58,13 +70,16 @@ window.onload=function(){
     }
     function changeComicPage(i){
         oComicImg.src='img/page'+i+'.png';
+        oPageBtn.innerText="Page "+i;
         state.ChapterPage=i;
         window.history.pushState(state,`chapter${state.Chapter}/page${state.ChapterPage}`,`#chapter${state.Chapter}/page${state.ChapterPage}`);
     }
     function changeComicChapter(i){
+        //改變章節就從第一頁開始看
+        oComicImg.src='img/page'+i+'.png';
+        state.ChapterPage=i;
+        oChapterBtn.innerText="Chapter "+i;
         state.Chapter=i;
-        console.log(state.ChapterPage);
-
         window.history.pushState(state,`chapter${state.Chapter}/page1`,`#chapter${state.Chapter}/page1`);
     }
     function goHomePage(){
