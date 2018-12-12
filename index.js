@@ -5,7 +5,7 @@ window.onload = function () {
         ChapterPage: 1,
         totalChapter: 2,
         totalPage: 12,
-        nightMod:false
+        nightMod: false,
     };
     aIndexChapterList = document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterBtn = document.querySelector(".options .chapter .chapter-btn");
@@ -20,22 +20,48 @@ window.onload = function () {
     aComicNextBtn = document.getElementsByClassName("page-next-btn");
     aChapterPrevBtn = document.getElementsByClassName("chapter-prev-btn");
     aChapterNextBtn = document.getElementsByClassName("chapter-next-btn");
-    aFooterImg=document.querySelectorAll('.chapter-footer .imgbox img');
-    oSwitchBtn=document.querySelector('.chapter-nav .icons .switch-btn');
-    oBar=document.querySelector('.chapter-nav .icons .switch-bar .bar');
-    nightModEle=[
-        document.getElementsByClassName('.container'),
-        document.querySelector('.page-header h2'),
-        aFooterImg
-    ];
-    oSwitchBtn.addEventListener('click',()=>{
-        oBar.classList.toggle('nightMod');
-        oBar.classList.contains('nightMod')?state.nightMod=true:state.nightMod=false;
-        state.nightMod?()=>{
-            document.getElementsByClassName('page-header')[0].style.cssText="background-color:#50ff44;color:black;";
-        }:()=>{
-            document.getElementsByClassName('page-header')[0].style.cssText="";
-        };
+    aFooterImg = document.querySelectorAll('.chapter-footer .imgbox img');
+    oSwitchBtn = document.querySelector('.chapter-nav .icons .switch-btn');
+    aFas = document.querySelectorAll('.chapter-nav .icons .fas');
+    oFooterScrollbar = document.querySelector('.bottom-nav .container-footer .list');
+    oFooterScrollbar.addEventListener('mousedown', handleClick = () => {
+        console.log(event.clientX);
+        oFooterScrollbar.addEventListener('mousemove', handleMove = () => {
+            console.log(event.clientX);
+        })
+        document.documentElement.addEventListener('mouseup', () => {
+            oFooterScrollbar.removeEventListener('mousemove', handleMove);
+        })
+    })
+    oSwitchBtn.addEventListener('click', () => {
+        state.nightMod = !state.nightMod;
+        if (state.nightMod === true) {
+            document.querySelector('.page-header h2').classList.add('nightMod');
+            document.getElementsByClassName('container')[0].classList.add('nightMod');
+            for (i = -1; aFas[++i];) {
+                aFas[i].classList.add('nightMod');
+            }
+            document.querySelector('.options .title').classList.add('nightMod');
+            document.querySelector('.chapter-nav .icons .switch-bar').style.borderColor = 'white';
+            document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.add('nightMod');
+            aFooterImg[state.ChapterPage - 1].classList.replace('active', 'nightMod-active');
+            document.querySelector('.bottom-scrollbar').classList.add('nightMod');
+            // document.querySelector('.bottom-scrollbar .scrollbar-bg').classList.add('nightMod');
+            // document.querySelector('.bottom-scrollbar .scrollbar-bg .bar').classList.add('nightMod');
+        } else {
+            document.querySelector('.page-header h2').classList.remove('nightMod');
+            document.getElementsByClassName('container')[0].classList.remove('nightMod');
+            for (i = -1; aFas[++i];) {
+                aFas[i].classList.remove('nightMod');
+            }
+            document.querySelector('.options .title').classList.remove('nightMod');
+            document.querySelector('.chapter-nav .icons .switch-bar').style.borderColor = '';
+            document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.remove('nightMod');
+            aFooterImg[state.ChapterPage - 1].classList.replace('nightMod-active', 'active');
+            document.querySelector('.bottom-scrollbar').classList.remove('nightMod');
+            // document.querySelector('.bottom-scrollbar .scrollbar-bg').classList.remove('nightMod');
+            // document.querySelector('.bottom-scrollbar .scrollbar-bg .bar').classList.remove('nightMod');
+        }
     });
     const hash = window.location.hash;
     if (hash === '') {
@@ -56,36 +82,36 @@ window.onload = function () {
     for (let i = -1; aPageMenuListLi[++i];) {
         aPageMenuListLi[i].addEventListener('click', changeComicPage.bind("", i + 1));
     }
-    for (let i = -1,oldActive; aFooterImg[++i];) {
-        aFooterImg[i].addEventListener('click', ()=>{
+    for (let i = -1; aFooterImg[++i];) {
+        aFooterImg[i].addEventListener('click', () => {
             changeComicPage(i + 1);
         });
     }
     for (let i = -1; aComicPrevBtn[++i];) {
         aComicPrevBtn[i].addEventListener('click', () => {
             if (state.ChapterPage - 1 > 0) {
-                changeComicPage(state.ChapterPage-1);
+                changeComicPage(state.ChapterPage - 1);
             }
         });
     }
     for (let i = -1; aComicNextBtn[++i];) {
         aComicNextBtn[i].addEventListener('click', () => {
             if (state.ChapterPage + 1 <= state.totalPage) {
-                changeComicPage(state.ChapterPage+1);
+                changeComicPage(state.ChapterPage + 1);
             }
         });
     }
     for (let i = -1; aChapterPrevBtn[++i];) {
         aChapterPrevBtn[i].addEventListener('click', () => {
             if (state.Chapter - 1 > 0) {
-                changeComicChapter(state.Chapter-1);
+                changeComicChapter(state.Chapter - 1);
             }
         });
     }
     for (let i = -1; aChapterNextBtn[++i];) {
         aChapterNextBtn[i].addEventListener('click', () => {
             if (state.Chapter + 1 <= state.totalChapter) {
-                changeComicChapter(state.Chapter+1);
+                changeComicChapter(state.Chapter + 1);
             }
         });
     }
@@ -113,31 +139,31 @@ window.onload = function () {
         document.getElementsByClassName('chapter-content')[0].style.display = "flex";
         document.getElementsByClassName('chapter-nav')[0].style.display = "flex";
         document.getElementsByClassName('chapter-footer')[0].style.display = "block";
-        for(i=-1;aFooterImg[++i];){
-            aFooterImg[i].src=`img/chapter${state.Chapter}/page${i+1}.png`;
+        for (i = -1; aFooterImg[++i];) {
+            aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
     }
     function changeComicPage(i) {
-        aFooterImg[state.ChapterPage-1].classList.remove('active');
+        aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         oPageBtn.innerText = "Page " + i;
         state.ChapterPage = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
-        aFooterImg[state.ChapterPage-1].classList.add('active');
+        aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
         window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
-        for(i=-1;aFooterImg[++i];){
-            aFooterImg[i].src=`img/chapter${state.Chapter}/page${i+1}.png`;
-        }
     }
     function changeComicChapter(i) {
         //改變章節就從第一頁開始看
-        aFooterImg[state.ChapterPage-1].classList.remove('active');
+        aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         state.ChapterPage = 1;
         state.Chapter = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         oChapterBtn.innerText = "Chapter " + i;
-        oPageBtn.innerText = "Page "+state.ChapterPage;
-        aFooterImg[state.ChapterPage-1].classList.add('active');
+        oPageBtn.innerText = "Page " + state.ChapterPage;
+        aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
         window.history.pushState(state, `chapter${state.Chapter}/page1`, `#chapter${state.Chapter}/page1`);
+        for (i = -1; aFooterImg[++i];) {
+            aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
+        }
     }
     function goHomePage() {
         window.history.pushState(state, "index", 'index.htm');

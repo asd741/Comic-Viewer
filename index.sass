@@ -46,10 +46,13 @@ ul
                 padding-left: 0
         .banner-info,.page-footer
             width: 70vw
+.nightMod
+    background-color: black
 .container
     width: 1024px
     margin: auto
     font-size: 0px
+    transition: background .3s
     & .chapter-nav,& .chapter-content
         display: none
         font-size: 16px
@@ -69,6 +72,9 @@ ul
                 position: relative
                 padding-right: 20px
                 font-size: 20px
+                background-color: transparent
+                color: black
+                transition: color .3s
                 &::after
                     position: absolute
                     right: 0
@@ -81,6 +87,8 @@ ul
                     transform: translateY(-50%)
                 &:hover
                     cursor: pointer
+            & .nightMod
+                color: white
             & .chapter,& .page
                 position: relative
                 z-index: 2
@@ -98,7 +106,7 @@ ul
                     border-width: 5px 4px
                     content: ''
                     &:hover
-                        border-color: #50ff44 transparent transparent transparent
+                        border-color: transparent transparent #50ff44 transparent
                 & .after
                     position: absolute
                     bottom: 0
@@ -110,7 +118,7 @@ ul
                     border-width: 5px 4px
                     content: ''
                     &:hover
-                        border-color: transparent transparent #50ff44 transparent
+                        border-color: #50ff44 transparent transparent transparent
                 & .chapter-btn,& .page-btn
                     +nav-menu-btn
                 & .menu
@@ -142,20 +150,26 @@ ul
                     cursor: pointer
             & .switch-bar
                 position: relative
+                background-color: white
                 +switch
                 & .bar
                     position: absolute
                     left: 0
                     width: 50%
                     height: 100%
-                    background: black
+                    background-color: black
                     transition: transform .3s
                     transform: translateX(0%)
                 & .nightMod
                     transform: translateX(100%)
             & .fas
                 font-size: 20px
+                color: black
+                transition: color .3s
                 vertical-align: middle
+                background-color: transparent
+            & .nightMod
+                color: white
     & .chapter-content
         position: relative
         & .prev,& .next
@@ -181,7 +195,7 @@ ul
                 height: 100%
         & .next
             right: 0
-            color: rgba(0,0,0,0.10)
+            color: rgba(0,0,0,.2)
             transform: translateX(100%)
     & .page-header
         background-color: #000
@@ -192,11 +206,12 @@ ul
             font-family: Roboto-BlackItalic
             font-size: 36px
             color: #50FF44
+            transition: background-color .3s,color .3s cubic-bezier(1,.1,.7,.7)
             &:hover
                 cursor: pointer
         & .nightMod
-            background-color: #50ff44
             color: black
+            background-color: #50ff44
     & .content
         width: 620px
         margin: auto
@@ -286,6 +301,7 @@ ul
                 color: #000
         & .chapter-footer
             display: none
+            padding-bottom: 24px
             & .bottom-nav
                 display: flex
                 align-items: flex-end
@@ -324,51 +340,63 @@ ul
                         border: 4px solid transparent
                         width: 80px
                         height: 120px
+                        transition: border .2s
                         &:hover
                             cursor: pointer
                     & .active
-                        border: 4px solid
+                        border: 4px solid black
                         position: relative
+                    & .nightMod-active
+                        border: 4px solid #50ff44
             & .bottom-scrollbar
                 position: relative
                 margin-top: 16px
-                padding: 2px 0px
                 width: inherit
                 height: 20px
                 background-color: #000
                 text-align: center
-                &::before
+                & .fa-caret-left,& .fa-caret-right
                     position: absolute
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    width: 50px
+                    height: 100%
+                    top: 0
+                    font-size: 16px
+                    background-color: black
+                    color: white
+                & .fa-caret-left
                     left: 0
-                    top: 50%
-                    margin: 0px 23px 0px 18px
-                    border-style: solid
-                    border-color: transparent white transparent transparent
-                    border-width: 4px 5px
-                    content: ''
-                    background-color: black
-                    transform: translateY(-50%)
-                &::after
-                    position: absolute
+                & .fa-caret-right
                     right: 0
-                    top: 50%
-                    margin: 0px 18px 0px 23px
-                    border-style: solid
-                    border-color: transparent transparent transparent white
-                    border-width: 4px 5px
-                    content: ''
-                    background-color: black
-                    transform: translateY(-50%)
                 & .scrollbar-bg
-                    display: inline-block
+                    display: inline-flex
+                    box-sizing: border-box
+                    align-items: center
                     background-color: #fff
-                    width: calc(100% - 102px)
+                    width: calc(100% - 100px)
                     height: inherit
+                    border-width: 2px 0px 2px 0px
+                    border-style: solid
+                    border-color: black
+                    transition: all .3s
                     & .bar
                         position: relative
                         left: 20px
                         width: 90px
-                        height: 20px
+                        height: calc(100% - 2px)
                         background: black
+                        transition: all .3s
                         &:hover
                             cursor: pointer
+            & .nightMod
+                & .fa-caret-right,& .fa-caret-left
+                    background-color: white
+                    color: black
+                & .scrollbar-bg
+                    border-color: white
+                    background-color: black
+                    & .bar
+                        background: white
+                        border: 0px
