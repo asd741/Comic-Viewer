@@ -46,10 +46,13 @@ ul
                 padding-left: 0
         .banner-info,.page-footer
             width: 70vw
+.nightMod
+    background-color: black
 .container
     width: 1024px
     margin: auto
     font-size: 0px
+    transition: background .3s
     & .chapter-nav,& .chapter-content
         display: none
         font-size: 16px
@@ -69,6 +72,8 @@ ul
                 position: relative
                 padding-right: 20px
                 font-size: 20px
+                color: black
+                transition: color .3s
                 &::after
                     position: absolute
                     right: 0
@@ -81,6 +86,8 @@ ul
                     transform: translateY(-50%)
                 &:hover
                     cursor: pointer
+            & .nightMod
+                color: white
             & .chapter,& .page
                 position: relative
                 z-index: 2
@@ -98,7 +105,7 @@ ul
                     border-width: 5px 4px
                     content: ''
                     &:hover
-                        border-color: #50ff44 transparent transparent transparent
+                        border-color: transparent transparent #50ff44 transparent
                 & .after
                     position: absolute
                     bottom: 0
@@ -110,7 +117,7 @@ ul
                     border-width: 5px 4px
                     content: ''
                     &:hover
-                        border-color: transparent transparent #50ff44 transparent
+                        border-color: #50ff44 transparent transparent transparent
                 & .chapter-btn,& .page-btn
                     +nav-menu-btn
                 & .menu
@@ -144,18 +151,24 @@ ul
                     transform: translateX(100%)
             & .switch-bar
                 position: relative
+                background-color: white
                 +switch
                 & .bar
                     position: absolute
                     left: 0
                     width: 50%
                     height: 100%
-                    background: black
+                    background-color: black
                     transition: transform .3s
                     transform: translateX(0%)
             & .fas
                 font-size: 20px
+                color: black
+                transition: color .3s
                 vertical-align: middle
+                background-color: transparent
+            & .nightMod
+                color: white
     & .chapter-content
         position: relative
         & .prev,& .next
@@ -192,8 +205,12 @@ ul
             font-family: Roboto-BlackItalic
             font-size: 36px
             color: #50FF44
+            transition: background-color .3s,color .3s cubic-bezier(1,.1,.7,.7)
             &:hover
                 cursor: pointer
+        & .nightMod
+            color: black
+            background-color: #50ff44
     & .content
         width: 620px
         margin: auto
@@ -321,11 +338,14 @@ ul
                         border: 4px solid transparent
                         width: 80px
                         height: 120px
+                        transition: border .2s
                         &:hover
                             cursor: pointer
                     & .active
-                        border: 4px solid
+                        border: 4px solid black
                         position: relative
+                    & .nightMod-active
+                        border: 4px solid #50ff44
             & .bottom-scrollbar
                 position: relative
                 margin-top: 16px
@@ -356,16 +376,27 @@ ul
                     content: ''
                     background-color: black
                     transform: translateY(-50%)
+
                 & .scrollbar-bg
                     display: inline-block
+                    box-sizing: border-box
                     background-color: #fff
                     width: calc(100% - 102px)
                     height: inherit
+                    border: 2px solid black
+                    transition: all .3s
                     & .bar
                         position: relative
                         left: 20px
                         width: 90px
-                        height: 20px
+                        height: 100%
                         background: black
+                        transition: all .3s
                         &:hover
                             cursor: pointer
+                & .nightMod
+                    border: 2px solid white
+                    background-color: black
+                    & .nightMod
+                        background: white
+                        border: 0px
