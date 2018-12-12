@@ -140,8 +140,6 @@ ul
                 opacity: 0
                 &:hover
                     cursor: pointer
-                &:checked + .switch-bar .bar
-                    transform: translateX(100%)
             & .switch-bar
                 position: relative
                 +switch
@@ -153,6 +151,8 @@ ul
                     background: black
                     transition: transform .3s
                     transform: translateX(0%)
+                & .nightMod
+                    transform: translateX(100%)
             & .fas
                 font-size: 20px
                 vertical-align: middle
@@ -194,6 +194,9 @@ ul
             color: #50FF44
             &:hover
                 cursor: pointer
+        & .nightMod
+            background-color: #50ff44
+            color: black
     & .content
         width: 620px
         margin: auto

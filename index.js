@@ -4,7 +4,8 @@ window.onload = function () {
         Chapter: 1,
         ChapterPage: 1,
         totalChapter: 2,
-        totalPage: 12
+        totalPage: 12,
+        nightMod:false
     };
     aIndexChapterList = document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterBtn = document.querySelector(".options .chapter .chapter-btn");
@@ -21,9 +22,20 @@ window.onload = function () {
     aChapterNextBtn = document.getElementsByClassName("chapter-next-btn");
     aFooterImg=document.querySelectorAll('.chapter-footer .imgbox img');
     oSwitchBtn=document.querySelector('.chapter-nav .icons .switch-btn');
-
+    oBar=document.querySelector('.chapter-nav .icons .switch-bar .bar');
+    nightModEle=[
+        document.getElementsByClassName('.container'),
+        document.querySelector('.page-header h2'),
+        aFooterImg
+    ];
     oSwitchBtn.addEventListener('click',()=>{
-        // getComputedStyle()
+        oBar.classList.toggle('nightMod');
+        oBar.classList.contains('nightMod')?state.nightMod=true:state.nightMod=false;
+        state.nightMod?()=>{
+            document.getElementsByClassName('page-header')[0].style.cssText="background-color:#50ff44;color:black;";
+        }:()=>{
+            document.getElementsByClassName('page-header')[0].style.cssText="";
+        };
     });
     const hash = window.location.hash;
     if (hash === '') {
