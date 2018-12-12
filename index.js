@@ -23,6 +23,20 @@ window.onload = function () {
     aFooterImg=document.querySelectorAll('.chapter-footer .imgbox img');
     oSwitchBtn=document.querySelector('.chapter-nav .icons .switch-btn');
     aFas=document.querySelectorAll('.chapter-nav .icons .fas');
+    oFooterScrollbar=document.querySelector('.bottom-nav .container-footer .list');
+    oFooterScrollbar.onclick=function(){
+        alert('1212');
+    }
+    oFooterScrollbar.addEventListener('mousedown',handleClick=()=>{
+        console.log('按下');
+        
+        oFooterScrollbar.addEventListener('mousemove',()=>{
+            console.log('移動');
+        })
+        // oFooterScrollbar.addEventListener('mouseup',()=>{
+        //     oFooterScrollbar.removeEventListener('click',handleClick);
+        // })
+    })
     oSwitchBtn.addEventListener('click',()=>{
         state.nightMod=!state.nightMod;
         if(state.nightMod===true){
