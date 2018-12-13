@@ -6,6 +6,8 @@ window.onload = function () {
         totalChapter: 2,
         totalPage: 12,
         nightMod: false,
+        footerImgScrollInitX: 0,
+        oFooterImgScrollvX: 0
     };
     aIndexChapterList = document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterBtn = document.querySelector(".options .chapter .chapter-btn");
@@ -23,17 +25,31 @@ window.onload = function () {
     aFooterImg = document.querySelectorAll('.chapter-footer .imgbox img');
     oSwitchBtn = document.querySelector('.chapter-nav .icons .switch-btn');
     aFas = document.querySelectorAll('.chapter-nav .icons .fas');
-    oFooterScrollbar = document.querySelector('.bottom-nav .container-footer .list');
-    oFooterScrollbar.addEventListener('mousedown', handleClick = () => {
-        console.log(event.clientX);
-        oFooterScrollbar.addEventListener('mousemove', handleMove = () => {
-            console.log(event.clientX);
-        })
-        document.documentElement.addEventListener('mouseup', () => {
-            oFooterScrollbar.removeEventListener('mousemove', handleMove);
+    oFooterImgScroll = document.querySelector('.bottom-nav .container-footer .list');
+    oFooterImgScroll.addEventListener('mousedown', handleClick = () => {
+        // state.footerImgScrollInitX=state.footerImgScrollInitX+state.oFooterImgScrollvX;
+        // console.log(state.footerImgScrollInitX, state.oFooterImgScrollvX);
+        
+        const startClientX = event.clientX;
+        oFooterImgScroll.addEventListener('mousemove', handleMove = () => {
+            const nowClientX = event.clientX;
+            state.oFooterImgScrollvX = (nowClientX - startClientX) / 10;
+            oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX + state.oFooterImgScrollvX}%)`;
         })
     })
-    oSwitchBtn.addEventListener('click', () => {
+    document.documentElement.addEventListener('mouseup', () => {
+        oFooterImgScroll.removeEventListener('mousemove', handleMove);
+        state.footerImgScrollInitX += state.oFooterImgScrollvX;
+        state.footerImgScrollInitX=Math.min(0,state.footerImgScrollInitX);
+        state.footerImgScrollInitX=Math.max(-100,state.footerImgScrollInitX);
+        oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX + state.oFooterImgScrollvX}%)`;
+        // console.log(state.footerImgScrollInitX, state.oFooterImgScrollvX);
+        // state.footerImgScrollInitX
+        // state.oFooterImgScrollvX
+        // Math.min();
+        // Math.max();
+    })
+    function changeNightMod() {
         state.nightMod = !state.nightMod;
         if (state.nightMod === true) {
             document.querySelector('.page-header h2').classList.add('nightMod');
@@ -62,7 +78,21 @@ window.onload = function () {
             // document.querySelector('.bottom-scrollbar .scrollbar-bg').classList.remove('nightMod');
             // document.querySelector('.bottom-scrollbar .scrollbar-bg .bar').classList.remove('nightMod');
         }
-    });
+    }
+    function closeNightMod() {
+        state.nightMod = false;
+        document.querySelector('.page-header h2').classList.remove('nightMod');
+        document.getElementsByClassName('container')[0].classList.remove('nightMod');
+        for (i = -1; aFas[++i];) {
+            aFas[i].classList.remove('nightMod');
+        }
+        document.querySelector('.options .title').classList.remove('nightMod');
+        document.querySelector('.chapter-nav .icons .switch-bar').style.borderColor = '';
+        document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.remove('nightMod');
+        aFooterImg[state.ChapterPage - 1].classList.replace('nightMod-active', 'active');
+        document.querySelector('.bottom-scrollbar').classList.remove('nightMod');
+    }
+    oSwitchBtn.addEventListener('click', changeNightMod);
     const hash = window.location.hash;
     if (hash === '') {
         goHomePage();
@@ -142,6 +172,7 @@ window.onload = function () {
         for (i = -1; aFooterImg[++i];) {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
+        aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
     }
     function changeComicPage(i) {
         aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
@@ -172,5 +203,6 @@ window.onload = function () {
         document.getElementsByClassName('chapter-content')[0].style.display = "none";
         document.getElementsByClassName('chapter-nav')[0].style.display = "none";
         document.getElementsByClassName('chapter-footer')[0].style.display = "none";
+        closeNightMod();
     }
 }
