@@ -322,12 +322,13 @@ ul
                 width: inherit
                 overflow: hidden
                 & .list
-                    width: 200%
+                    display: flex
+                    width: 240%
                     white-space: nowrap
                     transition: transform .3s
                 & .imgbox
                     display: inline-block
-                    margin-right: 20px
+                    flex-grow: 1
                     text-align: center
                     & span
                         font-family: Roboto-Bold
@@ -337,6 +338,7 @@ ul
                     & img
                         position: relative
                         display: block
+                        margin: auto
                         box-sizing: border-box
                         border: 4px solid transparent
                         width: 80px

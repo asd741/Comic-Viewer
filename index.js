@@ -25,24 +25,22 @@ window.onload = function () {
     aFooterImg = document.querySelectorAll('.chapter-footer .imgbox img');
     oSwitchBtn = document.querySelector('.chapter-nav .icons .switch-btn');
     aFas = document.querySelectorAll('.chapter-nav .icons .fas');
+    oFooterImgScrollView = document.querySelector('.bottom-nav .container-footer');
     oFooterImgScroll = document.querySelector('.bottom-nav .container-footer .list');
-    oFooterImgScroll.addEventListener('mousedown', handleClick = () => {
-        // state.footerImgScrollInitX=state.footerImgScrollInitX+state.oFooterImgScrollvX;
-        // console.log(state.footerImgScrollInitX, state.oFooterImgScrollvX);
-        
+    oFooterImgScrollView.addEventListener('mousedown', handleClick = () => {
         const startClientX = event.clientX;
-        oFooterImgScroll.addEventListener('mousemove', handleMove = () => {
+        oFooterImgScrollView.addEventListener('mousemove', handleMove = () => {
             const nowClientX = event.clientX;
             state.oFooterImgScrollvX = (nowClientX - startClientX) / 10;
             oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX + state.oFooterImgScrollvX}%)`;
         })
     })
     document.documentElement.addEventListener('mouseup', () => {
-        oFooterImgScroll.removeEventListener('mousemove', handleMove);
+        handleMove&&oFooterImgScrollView.removeEventListener('mousemove', handleMove);
         state.footerImgScrollInitX += state.oFooterImgScrollvX;
         state.footerImgScrollInitX=Math.min(0,state.footerImgScrollInitX);
-        state.footerImgScrollInitX=Math.max(-100,state.footerImgScrollInitX);
-        oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX + state.oFooterImgScrollvX}%)`;
+        state.footerImgScrollInitX=Math.max(-60,state.footerImgScrollInitX);
+        oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX}%)`;
         // console.log(state.footerImgScrollInitX, state.oFooterImgScrollvX);
         // state.footerImgScrollInitX
         // state.oFooterImgScrollvX
@@ -205,4 +203,7 @@ window.onload = function () {
         document.getElementsByClassName('chapter-footer')[0].style.display = "none";
         closeNightMod();
     }
+}
+function getCss(ele,attr){
+    return window.getComputedStyle(ele)[attr];
 }
