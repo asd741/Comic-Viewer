@@ -5,10 +5,11 @@ window.onload = function () {
         ChapterPage: 1,
         totalChapter: 2,
         totalPage: 12,
-        nightMod: false,
-        footerImgScrollInitX: 0,
-        oFooterImgScrollvX: 0
+        nightMod: false
     };
+    footerScrollState={
+        nowX:0
+    }
     aIndexChapterList = document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterBtn = document.querySelector(".options .chapter .chapter-btn");
     oPageBtn = document.querySelector(".options .page .page-btn");
@@ -28,24 +29,26 @@ window.onload = function () {
     oFooterImgScrollView = document.querySelector('.bottom-nav .container-footer');
     oFooterImgScroll = document.querySelector('.bottom-nav .container-footer .list');
     oFooterImgScrollView.addEventListener('mousedown', handleClick = () => {
-        const startClientX = event.clientX;
-        oFooterImgScrollView.addEventListener('mousemove', handleMove = () => {
-            const nowClientX = event.clientX;
-            state.oFooterImgScrollvX = (nowClientX - startClientX) / 10;
-            oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX + state.oFooterImgScrollvX}%)`;
+        let oldX = event.clientX;
+        // state.footerImgScrollInitX=parseInt(getCss(oFooterImgScroll,"transform").split(',')[4]);
+        oFooterImgScrollView.addEventListener('mousemove', footerScrollState.handleMove = () => {
+            const newX = event.clientX;
+            vX=(newX-oldX)/10;
+            oldX=newX;
+            oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX+vX}%)`;
+            footerScrollState.nowX+=vX;
         })
     })
     document.documentElement.addEventListener('mouseup', () => {
-        handleMove&&oFooterImgScrollView.removeEventListener('mousemove', handleMove);
-        state.footerImgScrollInitX += state.oFooterImgScrollvX;
-        state.footerImgScrollInitX=Math.min(0,state.footerImgScrollInitX);
-        state.footerImgScrollInitX=Math.max(-60,state.footerImgScrollInitX);
-        oFooterImgScroll.style.transform = `translateX(${state.footerImgScrollInitX}%)`;
-        // console.log(state.footerImgScrollInitX, state.oFooterImgScrollvX);
-        // state.footerImgScrollInitX
-        // state.oFooterImgScrollvX
-        // Math.min();
-        // Math.max();
+        if(!footerScrollState.handleMove){
+            return;
+        }
+        oFooterImgScrollView.removeEventListener('mousemove', footerScrollState.handleMove);
+        if(footerScrollState.nowX<=-60||footerScrollState.nowX>=0){
+            footerScrollState.nowX=Math.min(0,footerScrollState.nowX);
+            footerScrollState.nowX=Math.max(-60,footerScrollState.nowX);
+            oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
+        }
     })
     function changeNightMod() {
         state.nightMod = !state.nightMod;
@@ -205,5 +208,5 @@ window.onload = function () {
     }
 }
 function getCss(ele,attr){
-    return window.getComputedStyle(ele)[attr];
+    return window.getComputedStyle?window.getComputedStyle(ele)[attr]:ele.currentStyle[attr];
 }
