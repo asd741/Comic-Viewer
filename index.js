@@ -1,15 +1,5 @@
 const indexSass = require('./index.sass');
 window.onload = function () {
-    state = {
-        Chapter: 1,
-        ChapterPage: 1,
-        totalChapter: 2,
-        totalPage: 12,
-        nightMod: false
-    };
-    footerScrollState={
-        nowX:0
-    }
     aIndexChapterList = document.querySelectorAll(".page-footer .chapter-box .chapter-list");
     oChapterBtn = document.querySelector(".options .chapter .chapter-btn");
     oPageBtn = document.querySelector(".options .page .page-btn");
@@ -28,28 +18,71 @@ window.onload = function () {
     aFas = document.querySelectorAll('.chapter-nav .icons .fas');
     oFooterImgScrollView = document.querySelector('.bottom-nav .container-footer');
     oFooterImgScroll = document.querySelector('.bottom-nav .container-footer .list');
+    oFooterBarScrollBg = document.querySelector('.chapter-footer .bottom-scrollbar .scrollbar-bg');
+    oFooterBar = document.querySelector('.chapter-footer .bottom-scrollbar .bar');
+
+    state = {
+        Chapter: 1,
+        ChapterPage: 1,
+        totalChapter: 2,
+        totalPage: 12,
+        nightMod: false,
+        footerScroll: false,
+        footerBar: false
+    };
+    footerScrollState = {
+        nowX: 0
+    };
+    footerBarState = {
+        nowX: 0
+    }
+
+
     oFooterImgScrollView.addEventListener('mousedown', handleClick = () => {
         let oldX = event.clientX;
         // state.footerImgScrollInitX=parseInt(getCss(oFooterImgScroll,"transform").split(',')[4]);
         oFooterImgScrollView.addEventListener('mousemove', footerScrollState.handleMove = () => {
             const newX = event.clientX;
-            vX=(newX-oldX)/10;
-            oldX=newX;
-            oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX+vX}%)`;
-            footerScrollState.nowX+=vX;
+            vX = (newX - oldX) / 10;
+            oldX = newX;
+            
+            oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX + vX}%)`;
+            footerScrollState.nowX += vX;
+
+            footerBarState.nowX += vX;
+            oFooterBar.style.left = `${0-(footerBarState.nowX + vX)}px`;
+            
+            // var scale=60/footerBarState.maxX
+            // console.log(scale*footerScrollState.nowX);
+            
         })
     })
+    document.querySelector('.chapter-footer .bottom-nav .prev').addEventListener('click', () => {
+        footerScrollState.nowX = 0;
+        footerBarState.nowX = footerBarState.minX;
+        oFooterBar.style.left = footerBarState.nowX + 'px';
+        oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
+
+    })
+
+    document.querySelector('.chapter-footer .bottom-nav .next').addEventListener('click', () => {
+        footerScrollState.nowX = -60;
+        footerBarState.nowX = footerBarState.maxX;
+        oFooterBar.style.left = footerBarState.nowX + 'px';
+        oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
+    })
     document.documentElement.addEventListener('mouseup', () => {
-        if(!footerScrollState.handleMove){
+        if (!footerScrollState.handleMove) {
             return;
         }
         oFooterImgScrollView.removeEventListener('mousemove', footerScrollState.handleMove);
-        if(footerScrollState.nowX<=-60||footerScrollState.nowX>=0){
-            footerScrollState.nowX=Math.min(0,footerScrollState.nowX);
-            footerScrollState.nowX=Math.max(-60,footerScrollState.nowX);
+        if (footerScrollState.nowX <= -60 || footerScrollState.nowX >= 0) {
+            footerScrollState.nowX = Math.min(0, footerScrollState.nowX);
+            footerScrollState.nowX = Math.max(-60, footerScrollState.nowX);
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
         }
     })
+
     function changeNightMod() {
         state.nightMod = !state.nightMod;
         if (state.nightMod === true) {
@@ -93,20 +126,28 @@ window.onload = function () {
         aFooterImg[state.ChapterPage - 1].classList.replace('nightMod-active', 'active');
         document.querySelector('.bottom-scrollbar').classList.remove('nightMod');
     }
+
     oSwitchBtn.addEventListener('click', changeNightMod);
     const hash = window.location.hash;
+    //特別注意這兩個位子的結果不一樣，因為DOM沒顯示出來前是calc(100%-100px)
+    // var x=window.getComputedStyle(oFooterBarScrollBg)['width'];
+    // console.log(x);
     if (hash === '') {
         goHomePage();
     } else {
         goChapter(hash.match(/\d/g)[0]);
         changeComicPage(hash.match(/\d/g)[1]);
     }
+    //DOM出現在頁面中  此時獲取的w是520px
+    // var x=window.getComputedStyle(oFooterBarScrollBg)['width'];
+    // console.log(x);
     for (let i = -1; aGoHomePageBtn[++i];) {
         aGoHomePageBtn[i].addEventListener('click', goHomePage);
     }
     for (let i = -1; aIndexChapterList[++i];) {
         aIndexChapterList[i].addEventListener('click', goChapter.bind("", i + 1));
     }
+
     for (let i = -1; aChapterMenuListLi[++i];) {
         aChapterMenuListLi[i].addEventListener('click', changeComicChapter.bind("", i + 1));
     }
@@ -146,6 +187,7 @@ window.onload = function () {
             }
         });
     }
+
     oChapterBtn.addEventListener('click', function () {
         oChapterMenuList.classList.toggle('none');
         oPageMenuList.classList.add('none');
@@ -170,6 +212,10 @@ window.onload = function () {
         document.getElementsByClassName('chapter-content')[0].style.display = "flex";
         document.getElementsByClassName('chapter-nav')[0].style.display = "flex";
         document.getElementsByClassName('chapter-footer')[0].style.display = "block";
+        state.footerScroll = true;
+        state.footerBar = true;
+        footerBarState.minX = 0;
+        footerBarState.maxX = parseInt(getCss(oFooterBarScrollBg, 'width')) - parseInt(getCss(oFooterBar, 'width'));
         for (i = -1; aFooterImg[++i];) {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
@@ -204,9 +250,12 @@ window.onload = function () {
         document.getElementsByClassName('chapter-content')[0].style.display = "none";
         document.getElementsByClassName('chapter-nav')[0].style.display = "none";
         document.getElementsByClassName('chapter-footer')[0].style.display = "none";
+        state.footerScroll = false;
+        state.footerBar = false;
         closeNightMod();
     }
+
 }
-function getCss(ele,attr){
-    return window.getComputedStyle?window.getComputedStyle(ele)[attr]:ele.currentStyle[attr];
+function getCss(ele, attr) {
+    return window.getComputedStyle ? window.getComputedStyle(ele)[attr] : ele.currentStyle[attr];
 }
