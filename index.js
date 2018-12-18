@@ -128,16 +128,25 @@ window.onload = function () {
     }
 
     oSwitchBtn.addEventListener('click', changeNightMod);
-    const hash = window.location.hash;
+    // const hash = window.location.hash;
     //特別注意這兩個位子的結果不一樣，因為DOM沒顯示出來前是calc(100%-100px)
     // var x=window.getComputedStyle(oFooterBarScrollBg)['width'];
     // console.log(x);
-    if (hash === '') {
-        goHomePage();
-    } else {
-        goChapter(hash.match(/\d/g)[0]);
-        changeComicPage(hash.match(/\d/g)[1]);
+    function redirect() {
+        if (window.location.hash === '') {
+            goHomePage();
+        } else {
+            console.log(window.location.hash.match(/\d/g)[0],window.location.hash.match(/\d/g)[1]);
+            goChapter(window.location.hash.match(/\d/g)[0],false);
+            changeComicPage(window.location.hash.match(/\d/g)[1],false);
+            window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+        }
     }
+    redirect();
+    window.onpopstate=function(){
+        redirect();
+    };
+
     //DOM出現在頁面中  此時獲取的w是520px
     // var x=window.getComputedStyle(oFooterBarScrollBg)['width'];
     // console.log(x);
@@ -202,11 +211,12 @@ window.onload = function () {
         oChapterMenuList.classList.add('none');
         oPageMenuList.classList.add('none');
     })
-    function goChapter(i) {
+    function goChapter(i,pushState=true) {
+        
         state.Chapter = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         oChapterBtn.innerText = "Chapter " + i;
-        window.history.pushState(state, `chapter${state.Chapter}/page1`, `#chapter${state.Chapter}/page1`);
+        // window.history.pushState(state, `chapter${state.Chapter}/page1`, `#chapter${state.Chapter}/page1`);
         document.getElementsByClassName('index-footer')[0].style.display = "none";
         document.getElementsByClassName('index-content')[0].style.display = "none";
         document.getElementsByClassName('chapter-content')[0].style.display = "flex";
@@ -220,16 +230,22 @@ window.onload = function () {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
         aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
+        if(pushState){
+            window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+        }
     }
-    function changeComicPage(i) {
+    function changeComicPage(i,pushState=true) {
+        pushState?console.log('t'):console.log('f');
         aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         oPageBtn.innerText = "Page " + i;
         state.ChapterPage = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
-        window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+        if(pushState){
+            window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+        }
     }
-    function changeComicChapter(i) {
+    function changeComicChapter(i,pushState=true) {
         //改變章節就從第一頁開始看
         aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         state.ChapterPage = 1;
@@ -242,8 +258,12 @@ window.onload = function () {
         for (i = -1; aFooterImg[++i];) {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
+        if(pushState){
+            window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+        }
     }
     function goHomePage() {
+
         window.history.pushState(state, "index", 'index.htm');
         document.getElementsByClassName('index-footer')[0].style.display = "block";
         document.getElementsByClassName('index-content')[0].style.display = "block";
@@ -253,8 +273,9 @@ window.onload = function () {
         state.footerScroll = false;
         state.footerBar = false;
         closeNightMod();
+        console.log(state);
+        
     }
-
 }
 function getCss(ele, attr) {
     return window.getComputedStyle ? window.getComputedStyle(ele)[attr] : ele.currentStyle[attr];
