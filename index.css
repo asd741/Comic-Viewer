@@ -1,16 +1,419 @@
-body {
+html {
+  background-color: #f2f2f2;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+body, h1, h2, h3, h4, p, input, ul {
   margin: 0; }
 
+ul {
+  padding: 0;
+  list-style: none; }
+
+.clearfix {
+  clear: both; }
+
+.none {
+  display: none; }
+
+@media screen and (max-width: 1024px) {
+  body .container {
+    width: 100%; }
+    body .container .content {
+      width: 100%; }
+      body .container .content .banner, body .container .content .banner-info {
+        display: block;
+        margin: auto; }
+      body .container .content .banner {
+        margin-bottom: 16px; }
+      body .container .content .banner-info .content {
+        padding-left: 0; }
+    body .container .banner-info, body .container .page-footer {
+      width: 70vw; } }
+.nightMod {
+  background-color: black; }
+
 .container {
-  width: 1024px; }
-  .container .top {
+  width: 1024px;
+  margin: auto;
+  font-size: 0px;
+  transition: background 0.3s; }
+  .container .chapter-nav, .container .chapter-content {
+    display: none;
+    font-size: 16px; }
+  .container .chapter-nav {
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    width: 620px;
+    height: 72px;
+    font-weight: bold;
+    font-family: Roboto-Bold; }
+    .container .chapter-nav .options {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center; }
+      .container .chapter-nav .options .title {
+        position: relative;
+        padding-right: 20px;
+        font-size: 20px;
+        background-color: transparent;
+        color: black;
+        transition: color 0.3s; }
+        .container .chapter-nav .options .title::after {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          margin-right: 2px;
+          border-style: solid;
+          border-color: transparent transparent transparent black;
+          border-width: 4px 5px;
+          content: "";
+          transform: translateY(-50%); }
+        .container .chapter-nav .options .title:hover {
+          cursor: pointer; }
+      .container .chapter-nav .options .nightMod {
+        color: white; }
+      .container .chapter-nav .options .chapter, .container .chapter-nav .options .page {
+        position: relative;
+        z-index: 2;
+        background: #fff; }
+        .container .chapter-nav .options .chapter:hover, .container .chapter-nav .options .page:hover {
+          cursor: pointer; }
+        .container .chapter-nav .options .chapter .before, .container .chapter-nav .options .page .before {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin-right: 16px;
+          margin-top: 3px;
+          border-style: solid;
+          border-color: transparent transparent black transparent;
+          border-width: 5px 4px;
+          content: ""; }
+          .container .chapter-nav .options .chapter .before:hover, .container .chapter-nav .options .page .before:hover {
+            border-color: transparent transparent #50ff44 transparent; }
+        .container .chapter-nav .options .chapter .after, .container .chapter-nav .options .page .after {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin-right: 16px;
+          margin-bottom: 3px;
+          border-style: solid;
+          border-color: black transparent transparent transparent;
+          border-width: 5px 4px;
+          content: ""; }
+          .container .chapter-nav .options .chapter .after:hover, .container .chapter-nav .options .page .after:hover {
+            border-color: #50ff44 transparent transparent transparent; }
+        .container .chapter-nav .options .chapter .chapter-btn, .container .chapter-nav .options .chapter .page-btn, .container .chapter-nav .options .page .chapter-btn, .container .chapter-nav .options .page .page-btn {
+          box-sizing: border-box;
+          border: 2px solid #000;
+          padding: 8px 0px 8px 16px;
+          width: 127px;
+          height: 35px;
+          font-size: 16px;
+          font-weight: bold; }
+        .container .chapter-nav .options .chapter .menu, .container .chapter-nav .options .page .menu {
+          position: absolute;
+          bottom: -9px;
+          background: #fff;
+          transform: translateY(100%); }
+          .container .chapter-nav .options .chapter .menu > li, .container .chapter-nav .options .page .menu > li {
+            box-sizing: border-box;
+            border: 2px solid #000;
+            padding: 8px 0px 8px 16px;
+            width: 127px;
+            height: 35px;
+            font-size: 16px;
+            font-weight: bold;
+            color: black; }
+            .container .chapter-nav .options .chapter .menu > li:hover, .container .chapter-nav .options .page .menu > li:hover {
+              background-color: black;
+              color: #fff; }
+          .container .chapter-nav .options .chapter .menu > li:not(:last-child), .container .chapter-nav .options .page .menu > li:not(:last-child) {
+            border-bottom: 0px; }
+      .container .chapter-nav .options .page {
+        position: relative;
+        left: -2px; }
+    .container .chapter-nav .icons {
+      height: 24px;
+      font-size: 0; }
+      .container .chapter-nav .icons .switch-btn {
+        position: absolute;
+        z-index: 2;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 2px solid;
+        margin: 0px 8px;
+        width: 48px;
+        height: 24px;
+        vertical-align: middle;
+        opacity: 0; }
+        .container .chapter-nav .icons .switch-btn:hover {
+          cursor: pointer; }
+      .container .chapter-nav .icons .switch-bar {
+        position: relative;
+        background-color: white;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 2px solid;
+        margin: 0px 8px;
+        width: 48px;
+        height: 24px;
+        vertical-align: middle; }
+        .container .chapter-nav .icons .switch-bar .bar {
+          position: absolute;
+          left: 0;
+          width: 50%;
+          height: 100%;
+          background-color: black;
+          transition: transform 0.3s;
+          transform: translateX(0%); }
+        .container .chapter-nav .icons .switch-bar .nightMod {
+          transform: translateX(100%); }
+      .container .chapter-nav .icons .fas {
+        font-size: 20px;
+        color: black;
+        transition: color 0.3s;
+        vertical-align: middle;
+        background-color: transparent; }
+      .container .chapter-nav .icons .nightMod {
+        color: white; }
+  .container .chapter-content {
+    position: relative; }
+    .container .chapter-content .prev, .container .chapter-content .next {
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 930px;
+      font-size: 27px;
+      line-height: 930px;
+      text-align: center; }
+      .container .chapter-content .prev:hover, .container .chapter-content .next:hover {
+        cursor: pointer; }
+    .container .chapter-content .prev {
+      left: 0;
+      transform: translateX(-100%);
+      background: #50ff44;
+      color: black; }
+    .container .chapter-content .imgbox {
+      width: 620px;
+      height: 930px; }
+      .container .chapter-content .imgbox img {
+        width: 100%;
+        height: 100%; }
+    .container .chapter-content .next {
+      right: 0;
+      color: rgba(0, 0, 0, 0.2);
+      transform: translateX(100%); }
+  .container .page-header {
     background-color: #000;
     height: 72px;
+    line-height: 72px;
     text-align: center; }
-    .container .top h2 {
+    .container .page-header h2 {
       font-family: Roboto-BlackItalic;
       font-size: 36px;
-      line-height: 36px;
-      color: #50FF44; }
+      color: #50FF44;
+      transition: background-color 0.3s, color 0.3s cubic-bezier(1, 0.1, 0.7, 0.7); }
+      .container .page-header h2:hover {
+        cursor: pointer; }
+    .container .page-header .nightMod {
+      color: black;
+      background-color: #50ff44; }
+  .container .content {
+    width: 620px;
+    margin: auto; }
+    .container .content .index-content {
+      display: none;
+      margin-top: 28px; }
+    .container .content .banner {
+      width: 300px;
+      border: 2px solid; }
+    .container .content .banner-info {
+      display: inline-block;
+      vertical-align: top;
+      width: 316px;
+      height: 100%; }
+      .container .content .banner-info .title {
+        box-sizing: border-box;
+        background: #000;
+        height: 52px;
+        line-height: 52px;
+        text-align: center;
+        color: #fff;
+        font-size: 34px; }
+      .container .content .banner-info .content {
+        width: 100%;
+        padding: 16px 24px; }
+        .container .content .banner-info .content .class {
+          margin-right: 20px;
+          margin-bottom: 8px;
+          width: 52px;
+          float: left;
+          font-family: Roboto-Bold; }
+        .container .content .banner-info .content .tag {
+          font-family: Roboto-Regular; }
+        .container .content .banner-info .content .class, .container .content .banner-info .content .tag, .container .content .banner-info .content .starbox {
+          font-size: 16px;
+          color: #000;
+          line-height: 24px; }
+        .container .content .banner-info .content .starbox {
+          float: left; }
+          .container .content .banner-info .content .starbox .fa-star {
+            font-size: 14px;
+            margin-right: 3px; }
+        .container .content .banner-info .content .title-essay, .container .content .banner-info .content .first-essay, .container .content .banner-info .content .second-essay {
+          font-family: Roboto-Regular;
+          font-size: 16px;
+          color: #000000;
+          line-height: 24px; }
+        .container .content .banner-info .content .title-essay {
+          font-family: Roboto-Bold;
+          margin-top: 24px;
+          margin-bottom: 8px; }
+        .container .content .banner-info .content .first-essay {
+          margin-bottom: 24px; }
+  .container .page-footer {
+    margin: 28px auto 50px; }
+    .container .page-footer .label {
+      display: inline-block;
+      padding: 8px 24px;
+      background-color: #000;
+      font-family: Roboto-Bold;
+      font-size: 24px;
+      color: #fff; }
+    .container .page-footer .chapter-box {
+      border: 4px solid #000;
+      padding: 11px 0px;
+      background-color: #fff;
+      font-family: Roboto-Bold;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      line-height: 24px; }
+      .container .page-footer .chapter-box .chapter-list {
+        padding: 10px 24px; }
+        .container .page-footer .chapter-box .chapter-list:hover {
+          background-color: #000;
+          color: #fff;
+          cursor: pointer; }
+      .container .page-footer .chapter-box .new::after {
+        margin-left: 16px;
+        padding: 2px 12px;
+        background-color: #50FF44;
+        content: "NEW";
+        font-family: Roboto-Bold;
+        font-weight: bolder;
+        font-size: 14px;
+        line-height: 14px;
+        color: #000; }
+    .container .page-footer .chapter-footer {
+      display: none;
+      padding-bottom: 24px; }
+      .container .page-footer .chapter-footer .bottom-nav {
+        display: flex;
+        align-items: flex-end; }
+      .container .page-footer .chapter-footer .prev, .container .page-footer .chapter-footer .next {
+        box-sizing: border-box;
+        min-width: 50px;
+        height: 120px;
+        padding: 48px 10.1px;
+        font-size: 30px;
+        background: #50ff44; }
+        .container .page-footer .chapter-footer .prev:hover, .container .page-footer .chapter-footer .next:hover {
+          cursor: pointer; }
+      .container .page-footer .chapter-footer .prev {
+        margin-right: 20px; }
+      .container .page-footer .chapter-footer .next {
+        margin-left: 20px; }
+      .container .page-footer .chapter-footer .container-footer {
+        width: inherit;
+        overflow: hidden; }
+        .container .page-footer .chapter-footer .container-footer .list {
+          display: flex;
+          width: 240%;
+          white-space: nowrap;
+          transform: translateX(0);
+          transition: transform 0.3s; }
+        .container .page-footer .chapter-footer .container-footer .imgbox {
+          display: inline-block;
+          flex-grow: 1;
+          text-align: center; }
+          .container .page-footer .chapter-footer .container-footer .imgbox span {
+            font-family: Roboto-Bold;
+            font-weight: bold;
+            font-size: 14px;
+            color: #000; }
+          .container .page-footer .chapter-footer .container-footer .imgbox img {
+            position: relative;
+            display: block;
+            margin: auto;
+            box-sizing: border-box;
+            border: 4px solid transparent;
+            width: 80px;
+            height: 120px;
+            transition: border 0.2s; }
+            .container .page-footer .chapter-footer .container-footer .imgbox img:hover {
+              cursor: pointer; }
+          .container .page-footer .chapter-footer .container-footer .imgbox .active {
+            border: 4px solid black;
+            position: relative; }
+          .container .page-footer .chapter-footer .container-footer .imgbox .nightMod-active {
+            border: 4px solid #50ff44; }
+      .container .page-footer .chapter-footer .bottom-scrollbar {
+        position: relative;
+        margin-top: 16px;
+        width: inherit;
+        height: 20px;
+        background-color: #000;
+        text-align: center; }
+        .container .page-footer .chapter-footer .bottom-scrollbar .fa-caret-left, .container .page-footer .chapter-footer .bottom-scrollbar .fa-caret-right {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          height: 100%;
+          top: 0;
+          font-size: 16px;
+          background-color: black;
+          color: white; }
+        .container .page-footer .chapter-footer .bottom-scrollbar .fa-caret-left {
+          left: 0; }
+        .container .page-footer .chapter-footer .bottom-scrollbar .fa-caret-right {
+          right: 0; }
+        .container .page-footer .chapter-footer .bottom-scrollbar .scrollbar-bg {
+          display: inline-flex;
+          box-sizing: border-box;
+          align-items: center;
+          background-color: #fff;
+          width: calc(100% - 100px);
+          height: inherit;
+          border-width: 2px 0px 2px 0px;
+          border-style: solid;
+          border-color: black;
+          transition: all 0.3s; }
+          .container .page-footer .chapter-footer .bottom-scrollbar .scrollbar-bg .bar {
+            position: relative;
+            left: 20px;
+            width: 90px;
+            height: calc(100% - 2px);
+            background: black;
+            transition: all 0.3s; }
+            .container .page-footer .chapter-footer .bottom-scrollbar .scrollbar-bg .bar:hover {
+              cursor: pointer; }
+      .container .page-footer .chapter-footer .nightMod .fa-caret-right, .container .page-footer .chapter-footer .nightMod .fa-caret-left {
+        background-color: white;
+        color: black; }
+      .container .page-footer .chapter-footer .nightMod .scrollbar-bg {
+        border-color: white;
+        background-color: black; }
+        .container .page-footer .chapter-footer .nightMod .scrollbar-bg .bar {
+          background: white;
+          border: 0px; }
 
 /*# sourceMappingURL=index.css.map */

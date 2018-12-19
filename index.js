@@ -42,7 +42,8 @@ window.onload = function () {
 
 
     oFooterImgScrollView.addEventListener('mousedown', handleClick = () => {
-        let oldX = event.clientX;
+        let oldX = event.clientX,
+            scale = Math.abs(footerBarState.maxX / footerScrollState.maxX);
         // state.footerImgScrollInitX=parseInt(getCss(oFooterImgScroll,"transform").split(',')[4]);
         oFooterImgScrollView.addEventListener('mousemove', footerScrollState.handleMove = () => {
             const newX = event.clientX;
@@ -52,10 +53,16 @@ window.onload = function () {
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX + vX}%)`;
             footerScrollState.nowX += vX;
 
-            footerBarState.nowX += vX;
-            oFooterBar.style.left = `${0 - (footerBarState.nowX + vX)}px`;
+            footerBarState.nowX = footerScrollState.nowX * scale;
+            // console.log(footerBarState.maxX, footerBarState.minX, footerBarState.nowX);
+            if (Math.abs(footerBarState.nowX) > footerBarState.maxX || Math.abs(footerBarState.nowX) < footerBarState.minX){
+                footerBarState.nowX = Math.min(footerBarState.maxX, Math.abs(footerBarState.nowX));
+                footerBarState.nowX = Math.max(footerBarState.minX, footerBarState.nowX);
+                console.log(footerBarState.nowX);
+                
+            }
 
-            // var scale = Math.abs(footerScrollState.maxX / 100);
+            oFooterBar.style.left = `${footerBarState.nowX}px`;
         })
     })
     document.querySelector('.chapter-footer .bottom-nav .prev').addEventListener('click', () => {
@@ -81,6 +88,12 @@ window.onload = function () {
             footerScrollState.nowX = Math.max(footerScrollState.maxX, footerScrollState.nowX);
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
         }
+
+        // if (footerBarState.nowX > footerBarState.maxX || footerBarState.nowX < footerBarState.minX){
+        //     footerBarState.nowX = Math.min(footerBarState.maxX, footerBarState.nowX);
+        //     footerBarState.nowX = Math.max(footerBarState.minX, footerBarState.nowX);
+        //     oFooterBar.style.left = `(${footerBarState.nowX}px)`;
+        // }
     })
 
     function changeNightMod() {
@@ -230,6 +243,7 @@ window.onload = function () {
         state.footerBar = true;
         footerBarState.minX = 0;
         footerBarState.maxX = parseInt(getCss(oFooterBarScrollBg, 'width')) - parseInt(getCss(oFooterBar, 'width'));
+
         for (i = -1; aFooterImg[++i];) {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
