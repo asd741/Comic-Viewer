@@ -31,10 +31,13 @@ window.onload = function () {
         footerBar: false
     };
     footerScrollState = {
-        nowX: 0
+        nowX: 0,
+        maxX: -60
     };
     footerBarState = {
-        nowX: 0
+        nowX: 0,
+        minX: undefined,
+        maxX: undefined
     }
 
 
@@ -45,16 +48,14 @@ window.onload = function () {
             const newX = event.clientX;
             vX = (newX - oldX) / 10;
             oldX = newX;
-            
+
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX + vX}%)`;
             footerScrollState.nowX += vX;
 
             footerBarState.nowX += vX;
-            oFooterBar.style.left = `${0-(footerBarState.nowX + vX)}px`;
-            
-            // var scale=60/footerBarState.maxX
-            // console.log(scale*footerScrollState.nowX);
-            
+            oFooterBar.style.left = `${0 - (footerBarState.nowX + vX)}px`;
+
+            // var scale = Math.abs(footerScrollState.maxX / 100);
         })
     })
     document.querySelector('.chapter-footer .bottom-nav .prev').addEventListener('click', () => {
@@ -62,11 +63,10 @@ window.onload = function () {
         footerBarState.nowX = footerBarState.minX;
         oFooterBar.style.left = footerBarState.nowX + 'px';
         oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
-
     })
 
     document.querySelector('.chapter-footer .bottom-nav .next').addEventListener('click', () => {
-        footerScrollState.nowX = -60;
+        footerScrollState.nowX = footerScrollState.maxX;
         footerBarState.nowX = footerBarState.maxX;
         oFooterBar.style.left = footerBarState.nowX + 'px';
         oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
@@ -76,9 +76,9 @@ window.onload = function () {
             return;
         }
         oFooterImgScrollView.removeEventListener('mousemove', footerScrollState.handleMove);
-        if (footerScrollState.nowX <= -60 || footerScrollState.nowX >= 0) {
+        if (footerScrollState.nowX <= footerScrollState.maxX || footerScrollState.nowX >= 0) {
             footerScrollState.nowX = Math.min(0, footerScrollState.nowX);
-            footerScrollState.nowX = Math.max(-60, footerScrollState.nowX);
+            footerScrollState.nowX = Math.max(footerScrollState.maxX, footerScrollState.nowX);
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
         }
     })
@@ -134,17 +134,21 @@ window.onload = function () {
     // console.log(x);
     function redirect() {
         if (window.location.hash === '') {
-            goHomePage();
+            goHomePage(false);
         } else {
-            console.log(window.location.hash.match(/\d/g)[0],window.location.hash.match(/\d/g)[1]);
-            goChapter(window.location.hash.match(/\d/g)[0],false);
-            changeComicPage(window.location.hash.match(/\d/g)[1],false);
-            window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
+            goChapter(window.location.hash.match(/\d/g)[0], false);
+            changeComicPage(window.location.hash.match(/\d/g)[1], false);
         }
+        window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
     }
     redirect();
-    window.onpopstate=function(){
-        redirect();
+    window.onpopstate = function () {
+        if (window.location.hash === '') {
+            goHomePage(false);
+        } else {
+            goChapter(window.location.hash.match(/\d/g)[0], false);
+            changeComicPage(window.location.hash.match(/\d/g)[1], false);
+        }
     };
 
     //DOM出現在頁面中  此時獲取的w是520px
@@ -211,8 +215,8 @@ window.onload = function () {
         oChapterMenuList.classList.add('none');
         oPageMenuList.classList.add('none');
     })
-    function goChapter(i,pushState=true) {
-        
+    function goChapter(i, pushState = true) {
+
         state.Chapter = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         oChapterBtn.innerText = "Chapter " + i;
@@ -230,22 +234,21 @@ window.onload = function () {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
         aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
-        if(pushState){
+        if (pushState) {
             window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
         }
     }
-    function changeComicPage(i,pushState=true) {
-        pushState?console.log('t'):console.log('f');
+    function changeComicPage(i, pushState = true) {
         aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         oPageBtn.innerText = "Page " + i;
         state.ChapterPage = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         aFooterImg[state.ChapterPage - 1].classList.add(state.nightMod ? 'nightMod-active' : 'active');
-        if(pushState){
+        if (pushState) {
             window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
         }
     }
-    function changeComicChapter(i,pushState=true) {
+    function changeComicChapter(i, pushState = true) {
         //改變章節就從第一頁開始看
         aFooterImg[state.ChapterPage - 1].classList.remove(state.nightMod ? 'nightMod-active' : 'active');
         state.ChapterPage = 1;
@@ -258,13 +261,14 @@ window.onload = function () {
         for (i = -1; aFooterImg[++i];) {
             aFooterImg[i].src = `img/chapter${state.Chapter}/page${i + 1}.png`;
         }
-        if(pushState){
+        if (pushState) {
             window.history.pushState(state, `chapter${state.Chapter}/page${state.ChapterPage}`, `#chapter${state.Chapter}/page${state.ChapterPage}`);
         }
     }
-    function goHomePage() {
-
-        window.history.pushState(state, "index", 'index.htm');
+    function goHomePage(pushState = true) {
+        if (pushState) {
+            window.history.pushState(state, "index", 'index.htm');
+        }
         document.getElementsByClassName('index-footer')[0].style.display = "block";
         document.getElementsByClassName('index-content')[0].style.display = "block";
         document.getElementsByClassName('chapter-content')[0].style.display = "none";
@@ -273,8 +277,6 @@ window.onload = function () {
         state.footerScroll = false;
         state.footerBar = false;
         closeNightMod();
-        console.log(state);
-        
     }
 }
 function getCss(ele, attr) {
