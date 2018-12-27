@@ -36,14 +36,14 @@ window.onload = function () {
     };
     footerBarState = {
         nowX: 0,
-        minX: undefined,
-        maxX: undefined
+        minX: undefined,//0
+        maxX: undefined//parseInt(getCss(oFooterBarScrollBg, 'width')) - parseInt(getCss(oFooterBar, 'width'));
     }
-
 
     oFooterImgScrollView.addEventListener('mousedown', handleClick = () => {
         let oldX = event.clientX,
             scale = Math.abs(footerBarState.maxX / footerScrollState.maxX);
+        // console.log(footerBarState.maxX); 430
         // state.footerImgScrollInitX=parseInt(getCss(oFooterImgScroll,"transform").split(',')[4]);
         oFooterImgScrollView.addEventListener('mousemove', footerScrollState.handleMove = () => {
             const newX = event.clientX;
@@ -52,14 +52,13 @@ window.onload = function () {
 
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX + vX}%)`;
             footerScrollState.nowX += vX;
-
-            footerBarState.nowX = footerScrollState.nowX * scale;
-            // console.log(footerBarState.maxX, footerBarState.minX, footerBarState.nowX);
-            if (Math.abs(footerBarState.nowX) > footerBarState.maxX || Math.abs(footerBarState.nowX) < footerBarState.minX){
-                footerBarState.nowX = Math.min(footerBarState.maxX, Math.abs(footerBarState.nowX));
-                footerBarState.nowX = Math.max(footerBarState.minX, footerBarState.nowX);
-                console.log(footerBarState.nowX);
+            footerBarState.nowX -= vX * scale;
+            if (footerBarState.nowX > footerBarState.maxX) {//太右邊了
+                footerBarState.nowX=footerBarState.maxX;
                 
+            }
+            if(footerBarState.nowX < footerBarState.minX){//太左邊了
+                footerBarState.nowX=footerBarState.minX;
             }
 
             oFooterBar.style.left = `${footerBarState.nowX}px`;
@@ -88,12 +87,6 @@ window.onload = function () {
             footerScrollState.nowX = Math.max(footerScrollState.maxX, footerScrollState.nowX);
             oFooterImgScroll.style.transform = `translateX(${footerScrollState.nowX}%)`;
         }
-
-        // if (footerBarState.nowX > footerBarState.maxX || footerBarState.nowX < footerBarState.minX){
-        //     footerBarState.nowX = Math.min(footerBarState.maxX, footerBarState.nowX);
-        //     footerBarState.nowX = Math.max(footerBarState.minX, footerBarState.nowX);
-        //     oFooterBar.style.left = `(${footerBarState.nowX}px)`;
-        // }
     })
 
     function changeNightMod() {
@@ -229,7 +222,6 @@ window.onload = function () {
         oPageMenuList.classList.add('none');
     })
     function goChapter(i, pushState = true) {
-
         state.Chapter = i;
         oComicImg.src = `img/chapter${state.Chapter}/page${state.ChapterPage}.png`;
         oChapterBtn.innerText = "Chapter " + i;
