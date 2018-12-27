@@ -20,7 +20,7 @@ window.onload = function () {
     oFooterImgScroll = document.querySelector('.bottom-nav .container-footer .list');
     oFooterBarScrollBg = document.querySelector('.chapter-footer .bottom-scrollbar .scrollbar-bg');
     oFooterBar = document.querySelector('.chapter-footer .bottom-scrollbar .bar');
-
+    aFooterBookmark=document.getElementsByClassName('footer-bookmark');
     state = {
         Chapter: 1,
         ChapterPage: 1,
@@ -102,8 +102,9 @@ window.onload = function () {
             document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.add('nightMod');
             aFooterImg[state.ChapterPage - 1].classList.replace('active', 'nightMod-active');
             document.querySelector('.bottom-scrollbar').classList.add('nightMod');
-            // document.querySelector('.bottom-scrollbar .scrollbar-bg').classList.add('nightMod');
-            // document.querySelector('.bottom-scrollbar .scrollbar-bg .bar').classList.add('nightMod');
+            for (i = -1; aFooterBookmark[++i];) {
+                aFooterBookmark[i].classList.add('nightMod');
+            }
         } else {
             document.querySelector('.page-header h2').classList.remove('nightMod');
             document.getElementsByClassName('container')[0].classList.remove('nightMod');
@@ -115,8 +116,9 @@ window.onload = function () {
             document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.remove('nightMod');
             aFooterImg[state.ChapterPage - 1].classList.replace('nightMod-active', 'active');
             document.querySelector('.bottom-scrollbar').classList.remove('nightMod');
-            // document.querySelector('.bottom-scrollbar .scrollbar-bg').classList.remove('nightMod');
-            // document.querySelector('.bottom-scrollbar .scrollbar-bg .bar').classList.remove('nightMod');
+            for (i = -1; aFooterBookmark[++i];) {
+                aFooterBookmark[i].classList.remove('nightMod');
+            }
         }
     }
     function closeNightMod() {
@@ -131,6 +133,9 @@ window.onload = function () {
         document.querySelector('.chapter-nav .icons .switch-bar .bar').classList.remove('nightMod');
         aFooterImg[state.ChapterPage - 1].classList.replace('nightMod-active', 'active');
         document.querySelector('.bottom-scrollbar').classList.remove('nightMod');
+        for (i = -1; aFooterBookmark[++i];) {
+            aFooterBookmark[i].classList.remove('nightMod');
+        }
     }
 
     oSwitchBtn.addEventListener('click', changeNightMod);
